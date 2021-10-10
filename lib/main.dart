@@ -1,11 +1,18 @@
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:saegis_test/child_1.dart';
 import 'package:saegis_test/inherited_info.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  runApp(EasyLocalization(
+      supportedLocales:  const [Locale('en', 'US'), Locale('si', 'LK')],
+      path: 'assets/translations', // <-- change the path of the translation files
+      // fallbackLocale: const Locale('en', 'US'),
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,11 +23,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StateWidget(
       child: MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        home:  MyHomePage(title: 'title'.tr()),
       ),
     );
   }
@@ -89,7 +99,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       ));
                 },
                 child: const Text('Navigate to Child'),
-              )
+              ),
+              OutlinedButton(onPressed: (){
+                print(context.locale.toString());
+              }, child: Text('Print Lang'))
             ],
           ),
         ),
