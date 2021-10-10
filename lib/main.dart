@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:saegis_test/child_1.dart';
 import 'package:saegis_test/inherited_info.dart';
@@ -12,8 +14,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Info(
-      number: 15,
+    return StateWidget(
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -77,11 +78,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   child: const Text('Login')),
               OutlinedButton(
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ChildOne(number: 10,),
-                    )),
+                onPressed: () {
+                  Info.of(context)!.setNumber(Random().nextInt(100));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChildOne(
+                          number: 10,
+                        ),
+                      ));
+                },
                 child: const Text('Navigate to Child'),
               )
             ],

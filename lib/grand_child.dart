@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'inherited_info.dart';
@@ -16,7 +18,9 @@ class GrandChild extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(Info.of(context)!.number.toString()),
-            TextButton(onPressed: (){}, child: const Text('Click to change')),
+            TextButton(onPressed: (){
+              Info.of(context)!.setNumber(Random().nextInt(100));
+            }, child: const Text('Click to change')),
           ],
         ),
       ),
