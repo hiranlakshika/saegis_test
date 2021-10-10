@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:saegis_test/child_1.dart';
+import 'package:saegis_test/inherited_info.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,12 +12,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Info(
+      number: 15,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -70,7 +75,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
                     });
                   },
-                  child: const Text('Login'))
+                  child: const Text('Login')),
+              OutlinedButton(
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ChildOne(number: 10,),
+                    )),
+                child: const Text('Navigate to Child'),
+              )
             ],
           ),
         ),
